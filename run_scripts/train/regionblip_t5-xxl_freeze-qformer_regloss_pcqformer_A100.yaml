@@ -1,0 +1,125 @@
+model:
+  arch: "regionblip_t5"
+
+  enable_pointcloud_qformer: True
+
+  load_finetuned: False 
+  load_pretrained: False 
+
+  load_blip2_pretrain: True 
+  blip2_pretrain: '/mnt_jianchong2/pretrained/blip2_pretrained_flant5xxl__rename_for_regionblip.pth'
+  freeze_blip2_pretrain: True
+
+  bert_path: '/mnt_jianchong2/pretrained/bert-base-uncased/'
+
+  max_txt_len: 32
+  embed_dim: 256
+
+  freeze_qformer: True
+  qformer:
+    input_dim: 1408           # Be consistent with pretrained BLIP2
+    num_query_token: 32
+    cross_attention_freq: 2
+
+  freeze_vit: True
+  vit:
+    vit_model: "eva_clip_g"
+    img_size: 224
+    drop_path_rate: 0
+    use_grad_checkpoint: False 
+    vit_precision: "fp16"
+
+  freeze_point_encoder: True
+  pointbert:
+    pretrained: "/mnt_jianchong2/pretrained/point_bert_pretrained.pt"
+
+  t5_model: "/mnt_jianchong2/pretrained/google/flan-t5-xxl/"  #"google/flan-t5-xxl"
+  t5_precision: "bfloat16"
+  prompt: ""
+
+
+datasets:  
+  general_box_caption:
+    task_name: task_alignLLM_ImageRegionText_posembed
+    vis_processor: 
+      train: 
+        name: "general_box_caption_img_trainval"
+        image_size: 224
+    text_processor:
+      train:
+        name: "blip_caption"
+    build_info:
+      annotations:
+        train:
+          storage: "/mnt_jianchong2/datasets/Refer/refcoco/Refcoco_train.json"
+          dataset_repeat_num: 1
+      images:
+          storage: /mnt_jianchong2/datasets/Refer/images/
+  
+  pointcloud_caption:
+    task_name: task_alignLLM_PointcloudText
+    text_processor:
+      train:
+        name: "blip_caption"
+      eval:
+          name: "blip_caption"
+    build_info:
+      annotations:
+        train:
+          storage: /mnt_jianchong2/datasets/Cap3D/Cap3D_automated_Objaverse_train.txt
+          dataset_repeat_num: 1
+      pointcloud:
+        #storage: "/mnt_jianchong2/datasets/ULIP-Objaverse_triplets/objaverse_pc_parallel/"
+        storage: "/mnt/shared/Group-aiearth/jianchong/datasets/ULIP-Objaverse_triplets/objaverse_pc_parallel/"
+        num_points: 8192
+        pc_augmentation: True
+
+  scannet_refer:
+    task_name: task_alignLLM_PointcloudRegionText_posembed
+    annotations:
+      train:
+        scene_root_dir: "/mnt_jianchong2/datasets/scannet_reference_data//scannet_data"
+        scanner_file: "/mnt_jianchong2/datasets/ScanRefer_Dataset/raw/ScanRefer_filtered_train.json"
+        scannet_v2_tsv: "/mnt_jianchong2/datasets/scannet_reference_data//meta_data/scannetv2-labels.combined.tsv"
+        num_points: 40000
+        use_color: False  # be consistent with model.detection_3d.use_color
+        use_height: False
+        augment: False
+        use_random_cuboid: False
+        random_cuboid_min_points: 30000
+        dataset_repeat_num: 2
+  
+run:
+  runner: runner_regionblip
+  task: regionblip_pretrain
+
+  lr_sched: "linear_warmup_cosine_lr"
+  init_lr: 1e-4
+  min_lr: 1e-5
+  warmup_lr: 1e-6
+
+  weight_decay: 0.05
+  max_epoch: 10
+  batch_size_train_per_task:
+    task_alignLLM_ImageRegionText_posembed: 16
+    task_alignLLM_PointcloudText: 16
+    task_alignLLM_PointcloudRegionText_posembed: 16
+
+  batch_size_eval: 16
+  num_workers: 4
+  warmup_steps: 200
+  log_freq: 10
+
+  seed: 42
+  output_dir: "training_dir/regionblip_t5-xxl_freeze-qformer_regloss_pcqformer_A100"
+
+  amp: True
+  resume_ckpt_path: null
+
+  evaluate: False 
+  train_splits: ["train"]
+
+  device: "cuda"
+  world_size: 1
+  dist_url: "env://"
+  distributed: True

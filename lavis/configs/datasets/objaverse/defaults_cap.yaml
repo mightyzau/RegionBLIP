@@ -1,0 +1,8 @@
+datasets:
+  pointcloud_caption:
+    text_processor:
+      train:
+        name: "blip_caption"
+      eval:
+          name: "blip_caption"
+          

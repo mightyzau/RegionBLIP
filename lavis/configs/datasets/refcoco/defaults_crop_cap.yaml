@@ -1,0 +1,4 @@
+datasets:
+  refcoco_crop_caption:
+    data_type: images
+    

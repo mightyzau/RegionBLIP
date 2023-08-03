@@ -1,0 +1,80 @@
+model:
+  arch: "regionblip_opt"
+
+  enable_pointcloud_qformer: True
+
+  load_finetuned: False 
+  load_pretrained: True 
+  pretrained: 'xxx'
+
+  load_blip2_pretrain: True 
+  blip2_pretrain: /mnt_jianchong2/pretrained/blip2_pretrained_opt2.7b__rename_for_regionblip.pth
+
+  bert_path: '/mnt_jianchong2/pretrained/bert-base-uncased/'
+
+  max_txt_len: 32
+  embed_dim: 256
+
+  freeze_qformer: True        # Use BLIP2 pretrained qformer to keep image-caption ability
+  qformer:
+    input_dim: 1408           # Be consistent with pretrained BLIP2
+    num_query_token: 32
+    cross_attention_freq: 2
+
+  freeze_vit: True
+  vit:
+    vit_model: "eva_clip_g"
+    img_size: 364
+    drop_path_rate: 0
+    use_grad_checkpoint: False 
+    vit_precision: "fp16"
+
+  freeze_point_encoder: True
+  pointbert:
+    pretrained: "/mnt_jianchong2/pretrained/point_bert_pretrained.pt"
+
+  opt_model: "/mnt_jianchong2/pretrained/facebook/opt-2.7b/" #"facebook/opt-2.7b"
+  prompt: ""
+
+datasets:
+  coco_caption: # imagetext-highlevel task
+    vis_processor: 
+      eval:
+          name: "blip_image_eval"
+          image_size: 364
+    text_processor:
+      eval:
+          name: "blip_caption"
+    build_info:
+      annotations:
+        test:
+          url: https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_test.json
+          storage: /mnt_jianchong2/datasets/coco/annotations/coco_karpathy_test.json
+      images:
+        storage: "/mnt_jianchong2/datasets/coco/images/"
+
+run:
+  runner: runner_regionblip
+  task: image_captioning_coco
+
+  batch_size_eval: 16
+  num_workers: 4
+  log_freq: 10
+
+  max_len: 30
+  min_len: 8
+  num_beams: 5
+
+  seed: 42
+  output_dir: "training_dir/eval_regionblip_opt-2.7b_Image-caption_coco__A10040G"
+
+  amp: True
+  resume_ckpt_path: null
+
+  evaluate: True 
+  test_splits: ["test"]
+
+  device: "cuda"
+  world_size: 1
+  dist_url: "env://"
+  distributed: True

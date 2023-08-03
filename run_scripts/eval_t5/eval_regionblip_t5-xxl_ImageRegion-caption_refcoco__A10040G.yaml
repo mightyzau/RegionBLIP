@@ -1,0 +1,81 @@
+model:
+  arch: "regionblip_t5"
+
+  enable_pointcloud_qformer: True
+
+  load_finetuned: False 
+  load_pretrained: True 
+  pretrained: 'xxx'
+
+  load_blip2_pretrain: True 
+  blip2_pretrain: '/mnt_jianchong2/pretrained/blip2_pretrained_flant5xxl__rename_for_regionblip.pth'
+
+  bert_path: '/mnt_jianchong2/pretrained/bert-base-uncased/'
+
+  max_txt_len: 32
+  embed_dim: 256
+
+  freeze_qformer: True        # Use BLIP2 pretrained qformer to keep image-caption ability
+  qformer:
+    input_dim: 1408           # Be consistent with pretrained BLIP2
+    num_query_token: 32
+    cross_attention_freq: 2
+
+  freeze_vit: True
+  vit:
+    vit_model: "eva_clip_g"
+    img_size: 364
+    drop_path_rate: 0
+    use_grad_checkpoint: False 
+    vit_precision: "fp16"
+
+  freeze_point_encoder: True
+  pointbert:
+    pretrained: "/mnt_jianchong2/pretrained/point_bert_pretrained.pt"
+
+  t5_model: "/mnt_jianchong2/pretrained/google/flan-t5-xxl/"  #"google/flan-t5-xxl"
+  t5_precision: "bfloat16"
+
+  prompt: "a photo of"
+
+datasets:
+  general_box_caption:
+    vis_processor: 
+      eval: 
+        name: "general_box_caption_img_trainval"
+        image_size: 364
+    text_processor:
+      eval:
+        name: "blip_caption"
+    build_info:
+      annotations:
+        test:
+          storage: "/mnt/shared/Group-aiearth/jianchong/datasets/Refer/refcoco/Refcoco_test.json"
+      images:
+          storage: /mnt/shared/Group-aiearth/jianchong/datasets/Refer/images/
+
+run:
+  runner: runner_regionblip
+  task: imageregion_captioning_refcoco
+
+  batch_size_eval: 16
+  num_workers: 4
+  log_freq: 10
+
+  max_len: 30
+  min_len: 8
+  num_beams: 5
+
+  seed: 42
+  output_dir: "training_dir/eval_regionblip_t5-xxl_ImageRegion-caption_refcoco__A10040G"
+
+  amp: True
+  resume_ckpt_path: null
+
+  evaluate: True 
+  test_splits: ["test"]
+
+  device: "cuda"
+  world_size: 1
+  dist_url: "env://"
+  distributed: True

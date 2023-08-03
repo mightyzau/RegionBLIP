@@ -1,0 +1,103 @@
+
+model:
+  arch: "regionblip_t5"
+
+  enable_pointcloud_qformer: True
+
+  load_finetuned: False 
+  load_pretrained: True 
+  pretrained: 'xxx'
+
+  load_blip2_pretrain: True 
+  blip2_pretrain: '/mnt_jianchong2/pretrained/blip2_pretrained_flant5xxl__rename_for_regionblip.pth'
+
+  bert_path: '/mnt_jianchong2/pretrained/bert-base-uncased/'
+
+  max_txt_len: 32
+  embed_dim: 256
+
+  freeze_qformer: True        # Use BLIP2 pretrained qformer to keep image-caption ability
+  qformer:
+    input_dim: 1408           # Be consistent with pretrained BLIP2
+    num_query_token: 32
+    cross_attention_freq: 2
+
+  freeze_vit: True
+  vit:
+    vit_model: "eva_clip_g"
+    img_size: 224
+    drop_path_rate: 0
+    use_grad_checkpoint: False 
+    vit_precision: "fp16"
+
+  freeze_point_encoder: True
+  pointbert:
+    pretrained: "/mnt_jianchong2/pretrained/point_bert_pretrained.pt"
+
+  t5_model: "/mnt_jianchong2/pretrained/google/flan-t5-xxl/"  #"google/flan-t5-xxl"
+  t5_precision: "bfloat16"
+
+  prompt: ""
+
+
+datasets:
+  coco_vqa: # name of the dataset builder
+    type: eval
+    vis_processor:
+        eval:
+          name: "blip_image_eval"
+          image_size: 224
+    text_processor:
+        eval:
+          name: "blip_question"
+    build_info:
+        annotations:
+          val:
+            url:
+                # TODO make this order insensitive
+                - https://storage.googleapis.com/sfr-vision-language-research/LAVIS/datasets/vqav2/vqa_val_eval.json
+                - https://storage.googleapis.com/sfr-vision-language-research/LAVIS/datasets/vqav2/answer_list.json
+                - https://storage.googleapis.com/sfr-vision-language-research/LAVIS/datasets/vqav2/v2_OpenEnded_mscoco_val2014_questions.json
+                - https://storage.googleapis.com/sfr-vision-language-research/LAVIS/datasets/vqav2/v2_mscoco_val2014_annotations.json
+            storage:
+                - /mnt_jianchong2/datasets/coco/annotations/vqa_val_eval.json
+                - /mnt_jianchong2/datasets/coco/annotations/answer_list.json
+                - /mnt_jianchong2/datasets/coco/annotations/v2_OpenEnded_mscoco_val2014_questions.json
+                - /mnt_jianchong2/datasets/coco/annotations/v2_mscoco_val2014_annotations.json
+          
+          test:
+            url:
+                - https://storage.googleapis.com/sfr-vision-language-research/LAVIS/datasets/vqav2/vqa_test.json
+                - https://storage.googleapis.com/sfr-vision-language-research/LAVIS/datasets/vqav2/answer_list.json
+            storage:
+                - /mnt_jianchong2/datasets/coco/annotations/vqa_test.json
+                - /mnt_jianchong2/datasets/coco/annotations/answer_list.json
+
+        images:
+          storage: '/mnt_jianchong2/datasets/coco/images/'
+
+run:
+  runner: runner_regionblip
+  task: vqa
+
+  batch_size_eval: 8
+  num_workers: 4
+
+  # inference-specific
+  max_len: 10
+  min_len: 1
+  num_beams: 5
+  inference_method: "generate"
+  prompt: "Question: {} Short answer:"
+
+  seed: 42
+  output_dir: "training_dir/eval_regionblip_t5-xxl_zeroshot_vqav2__A10040G"
+
+  evaluate: True
+  test_splits: ["val"]
+
+  # distribution-specific
+  device: "cuda"
+  world_size: 1
+  dist_url: "env://"
+  distributed: True

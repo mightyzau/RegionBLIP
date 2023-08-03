@@ -1,0 +1,13 @@
+datasets:
+  scannet_refer:  # for poitn cloud detection
+    annotations:
+      #train:
+      #  scene_root_dir: "/mnt_jianchong/datasets/lavis/scannet_reference_data/scannet_data"
+      #  scanner_file: "/mnt_jianchong/datasets/lavis/ScanRefer_Dataset/raw/ScanRefer_filtered_train.json"
+      #  scannet_v2_tsv: "/mnt_jianchong/datasets/lavis/scannet_reference_data/meta_data/scannetv2-labels.combined.tsv"
+      #  num_points: 40000
+      #  use_color: False  # be consistent with model.detection_3d.use_color
+      #  use_height: False
+      #  augment: True
+      #  use_random_cuboid: True
+      #  random_cuboid_min_points: 30000

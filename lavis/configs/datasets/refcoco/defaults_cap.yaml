@@ -1,0 +1,21 @@
+ # Copyright (c) 2022, salesforce.com, inc.
+ # All rights reserved.
+ # SPDX-License-Identifier: BSD-3-Clause
+ # For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+
+datasets:
+  refcoco_caption: # name of the dataset builder
+    #dataset_card: dataset_card/coco_caption.md
+    data_type: images # [images|videos|features]
+
+    build_info:
+      # Be careful not to append minus sign (-) before split to avoid itemizing
+      #annotations:
+      #  train:
+      #    storage: Refer/refcoco/Refcoco_train.json
+        #val:
+        #  storage: Refer/refcoco/Refcoco_val.json
+        #test:
+        #  storage: Refer/refcoco/Refcoco_test.json
+      images:
+        storage: coco/images/
