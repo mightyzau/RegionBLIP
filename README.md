@@ -68,6 +68,7 @@ We test directly on the COCO-caption dataset. To download the COCO-caption datas
 
 
 <br/>
+
 ##### Image-Region-Text Data
 For the image-region-text data, we use the RefCOCO dataset. Please refer to this [repository](https://github.com/lichengunc/refer) to download annotation files. The image files are just the MSCOCO images.
 
@@ -86,6 +87,7 @@ The downloaded data looks like:
 ```
 
 <br/>
+
 ##### Pointcloud-Text Data
 For the point cloud data, we use the released Objaverse dataset from [ULIP](https://github.com/salesforce/ULIP). For the corresponding captions, we use the released text data from [Cap3D](https://huggingface.co/datasets/tiange/Cap3D).
 
@@ -101,6 +103,7 @@ The downloaded data looks like:
 ```
 
 <br/>
+
 ##### Pointcloud-Region-Text Data
 For the pointcloud-region-text data, we refer to the [ScanRefer](https://github.com/daveredrum/ScanRefer) for dataset prepartion. 
 
