@@ -159,12 +159,15 @@ The paths to these transformed ground-truth files should be registered in [*lavi
 
 
 <br/>
+
 For example, to evaluate *RegionBLIP-OPT-2.7B*'s image-region captioning performance, run the following command with downloaded weight of *regionblip_opt-2.7b.pth*.
+
 ```
 python -m torch.distributed.run --nproc_per_node=8 evaluate.py \
     --cfg-path run_scripts/eval_opt/eval_regionblip_opt-2.7b_ImageRegion-caption_refcoco__A10040G.yaml \
     --options model.load_pretrained=True model.pretrained=regionblip_opt-2.7b.pth
 ```
+
 The result should look like this.
 ```
 SPICE: 0.214
