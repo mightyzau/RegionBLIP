@@ -28,12 +28,12 @@ Examples of captioning results for images, image-regions, point-clouds, and poin
 <br/>
 We provide the pre-trained RegionBLIP models below.
 
-| Model | I-region captioning (RefCOCO test) | PCD captioning (Objaverse test) | P-region captioning (ReferScannet val) |
-| --- | --- | --- | --- |
-| [RegionBLIP-OPT-2.7B](https://drive.google.com/file/d/1YS6XuRh3plH6i8VP5qgU0g2grOxsyvkY/view?usp=drive_link) | 63.5 | 112.7 | 57.0 |
-| [RegionBLIP-OPT-6.7B](https://drive.google.com/file/d/1_Q3AVVFocBOPHUXiLJAwHvP0mG8XU98H/view?usp=drive_link) | 64.2 | 113.6 | 59.3 |
-| [RegionBLIP-T5-XL](https://drive.google.com/file/d/1raJmYJbZh2KRoPY6hgJy8meyFrzQ0WkP/view?usp=drive_link) | 47.6 | 108.1 | 59.2 |
-| RegionBLILP-T5-XXL | 56.1 | 109.0 | 53.6 |
+| Model | I-region captioning (RefCOCO test) | PCD captioning (Objaverse test) | P-region captioning (ReferScannet val) | Zero-shot ModelNet40 Classification |
+| --- | --- | --- | --- | --- |
+| [RegionBLIP-OPT-2.7B](https://drive.google.com/file/d/1YS6XuRh3plH6i8VP5qgU0g2grOxsyvkY/view?usp=drive_link) | 63.5 | 112.7 | 57.0 | 47.56 |
+| [RegionBLIP-OPT-6.7B](https://drive.google.com/file/d/1_Q3AVVFocBOPHUXiLJAwHvP0mG8XU98H/view?usp=drive_link) | 64.2 | 113.6 | 59.3 | 50.12 | 
+| [RegionBLIP-T5-XL](https://drive.google.com/file/d/1raJmYJbZh2KRoPY6hgJy8meyFrzQ0WkP/view?usp=drive_link) | 47.6 | 108.1 | 59.2 |  | 
+| RegionBLILP-T5-XXL | 56.1 | 109.0 | 53.6 |  |
 
 
 
