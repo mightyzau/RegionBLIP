@@ -1,0 +1,16 @@
+# Write by jianchong
+
+datasets:
+  objaverse_triplet:
+    dataset_card: dataset_card/objaverse_triplet.md
+    #data_type: pointcloud # [images | videos | features | pointcloud]
+
+    #build_info:
+    #  annotations:
+    #    train:
+    #      url: data/objaverse_triplet/merged_data.json
+    #      storage: data/objaverse_triplet/merged_data.json
+    #images:
+    #  storage: data/objaverse_triplet/render_images_split_100
+    #pointcloud:
+    #  storage: data/objaverse_triplet/objaverse_pc_parallel

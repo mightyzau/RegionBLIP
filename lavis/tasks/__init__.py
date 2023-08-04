@@ -23,6 +23,7 @@ from lavis.tasks.regionblip_tasks.image_caption import ImageCaptionCocoTask
 from lavis.tasks.regionblip_tasks.imageregion_caption import ImageRegionCaptionRefCocoTask
 from lavis.tasks.regionblip_tasks.pointcloud_caption import PointcloudCaptionObjaverseTask
 from lavis.tasks.regionblip_tasks.pointcloudregion_caption import PointcloudRegionCaptionRefScannetTask
+from lavis.tasks.regionblip_tasks.multimodal_3d_classification import Multimodal3DClassification
 
 
 def setup_task(cfg):

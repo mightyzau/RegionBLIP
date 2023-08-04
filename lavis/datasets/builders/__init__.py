@@ -45,6 +45,7 @@ from lavis.common.registry import registry
 from lavis.datasets.builders.general_box_caption_builder import GeneralBoxCapBuilder, GeneralBoxCapBuilder2
 from lavis.datasets.builders.pointcloud_caption_builder import PointcloudCaptionBuilder
 from lavis.datasets.builders.scannet_refer_builder import ScannetReferBuilder
+from lavis.datasets.builders.pointcloud_builder import MobileNet40Builder
 
 
 

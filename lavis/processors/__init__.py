@@ -25,6 +25,9 @@ from lavis.processors.clip_processors import ClipImageTrainProcessor
 
 from lavis.common.registry import registry
 
+# Add by regionblip
+from lavis.processors.pointcloud_processors import BasePointCloudProcessor
+
 __all__ = [
     "BaseProcessor",
     # ALPRO

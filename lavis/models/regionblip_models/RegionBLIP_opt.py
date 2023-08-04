@@ -1136,6 +1136,81 @@ class RegionBLIPOpt(BaseModel):
 
         return output_text
     
+    def predict_zs_pc_classification(self, samples):
+        # For zero-shot pointcloud classification
+        points = samples['pointcloud'].float()
+        targets = samples['label']
+
+        with self.maybe_autocast():
+            pc_embeds = self.point_encoder(points)
+            pc_embeds = self.pc_adapter(pc_embeds)
+            pc_atts = torch.ones(pc_embeds.size()[:-1], dtype=torch.long).to(self.device)
+        
+        query_tokens = self.query_tokens_pc.expand(pc_embeds.size(0), -1, -1)
+        
+        if self.enable_pointcloud_qformer:
+            qformer = self.Qformer_pc
+        else:
+            qformer = self.Qformer
+        with self.maybe_autocast():
+            query_output = qformer.bert(
+                query_embeds=query_tokens,
+                encoder_hidden_states=pc_embeds,
+                encoder_attention_mask=pc_atts,
+                use_cache=True,
+                return_dict=True,
+                modal_name="pointcloud"
+            )
+
+        pc_feats = F.normalize(self.stage1_proj_pc(query_output.last_hidden_state), dim=-1)     # [batch, #query, 256]
+
+        #logits = 100.0 * pc_feats @ self.point_classifier
+        logits = pc_feats @ self.point_classifier                                               # [batch, #query, #category]
+        logits = logits.max(dim=1).values                                                       # [batch, #catetory]
+
+        return {"predictions": logits, "targets": targets}
+    
+    def before_evaluation(self, dataset, task_type, **kwargs):
+        from lavis.tasks import Multimodal3DClassification
+
+        if task_type == Multimodal3DClassification:
+            modal_name = "pointcloud"
+            if self.enable_pointcloud_qformer:
+                qformer = self.Qformer_pc
+            else:
+                qformer = self.Qformer
+
+            # prepare zero-shot point_classifier
+            classnames = dataset.classnames
+            #templates = dataset.templates
+            templates = ["a point cloud model of {}."]
+            with torch.no_grad():
+                zs_weights = []
+                for classname in classnames:
+                    texts = [
+                        t.format(classname) for t in templates]
+                    
+                    text_tokens = self.tokenizer(
+                        texts,
+                        padding="max_length",
+                        truncation=True,
+                        max_length=self.max_txt_len,
+                        return_tensors="pt",
+                    ).to(self.device)                                                                       
+                    text_output = qformer.bert(
+                        text_tokens.input_ids,
+                        attention_mask=text_tokens.attention_mask,
+                        return_dict=True,
+                        modal_name=modal_name)                                                                 
+                    # text_output.last_hidden_state: [b, 32, 768]
+                    text_feats = self.stage1_proj_text(text_output.last_hidden_state[:, 0, :])      # [#prompt, 256]
+
+                    class_embedding = F.normalize(text_feats, dim=-1).mean(dim=0)                   # (256,)
+                    class_embedding /= class_embedding.norm()
+                    zs_weights.append(class_embedding)
+
+                self.point_classifier = torch.stack(zs_weights, dim=1).to(self.device)              # (256, #category)
+    
 
     def _lemmatize(self, answers):
         def apply(answer):

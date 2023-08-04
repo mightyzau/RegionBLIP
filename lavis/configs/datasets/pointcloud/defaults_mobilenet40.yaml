@@ -1,0 +1,5 @@
+# Write by jianchong
+
+datasets:
+  mobilenet40:
+    dataset_card: dataset_card/mobilenet40.md
