@@ -26,7 +26,7 @@ Examples of captioning results for images, image-regions, point-clouds, and poin
 
 
 <br/>
-We provide the pre-trained RegionBLIP models below.
+We provide the pre-trained RegionBLIP models below. Note that, if the point encoder is unfrozen during pre-training, the point-cloud zero-shot classification performance can be improved further.
 
 | Model | I-region captioning (RefCOCO test) | PCD captioning (Objaverse test) | P-region captioning (ReferScannet val) | Zero-shot ModelNet40 Classification |
 | --- | --- | --- | --- | --- |
