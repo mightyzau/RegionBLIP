@@ -68,8 +68,7 @@ datasets:
           storage: /mnt_jianchong2/datasets/Cap3D/Cap3D_automated_Objaverse_train.txt
           dataset_repeat_num: 1
       pointcloud:
-        #storage: "/mnt_jianchong2/datasets/ULIP-Objaverse_triplets/objaverse_pc_parallel/"
-        storage: "/mnt/shared/Group-aiearth/jianchong/datasets/ULIP-Objaverse_triplets/objaverse_pc_parallel/"
+        storage: "/mnt_jianchong2/datasets/ULIP-Objaverse_triplets/objaverse_pc_parallel/"
         num_points: 8192
         pc_augmentation: True
 
@@ -77,9 +76,9 @@ datasets:
     task_name: task_alignLLM_PointcloudRegionText_posembed
     annotations:
       train:
-        scene_root_dir: "/mnt_jianchong2/datasets/scannet_reference_data//scannet_data"
+        scene_root_dir: "/mnt_jianchong2/datasets/scannet_reference_data/scannet_data"
         scanner_file: "/mnt_jianchong2/datasets/ScanRefer_Dataset/raw/ScanRefer_filtered_train.json"
-        scannet_v2_tsv: "/mnt_jianchong2/datasets/scannet_reference_data//meta_data/scannetv2-labels.combined.tsv"
+        scannet_v2_tsv: "/mnt_jianchong2/datasets/scannet_reference_data/meta_data/scannetv2-labels.combined.tsv"
         num_points: 40000
         use_color: False  # be consistent with model.detection_3d.use_color
         use_height: False

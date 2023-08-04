@@ -33,10 +33,10 @@ registry.register("SPLIT_NAMES", ["train", "val", "test"])
 
 # add dataset paths for regionblip
 registry.register_path('caption_evaluate_refcoco_test',
-                       '/mnt_jianchong/datasets/lavis/Refer/refcoco/Refcoco_test__jianchong.json')
+                       '/mnt_jianchong2/datasets/Refer/refcoco/Refcoco_test__jianchong.json')
 
 registry.register_path('caption_evaluate_objaverse_test',
-                       '/mnt_jianchong/datasets/lavis/Cap3D/Cap3D_automated_Objaverse_test__jianchong.json')
+                       '/mnt_jianchong2/datasets/Cap3D/Cap3D_automated_Objaverse_test__jianchong.json')
 
 registry.register_path('caption_evaluate_scanrefer_val',
-                       '/mnt_jianchong/datasets/lavis/ScanRefer_Dataset/raw/ScanRefer_filtered_val__jianchong.json')
+                       '/mnt_jianchong2/datasets/ScanRefer_Dataset/raw/ScanRefer_filtered_val__jianchong.json')

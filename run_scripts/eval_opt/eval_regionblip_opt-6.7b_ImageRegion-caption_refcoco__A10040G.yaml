@@ -50,7 +50,7 @@ datasets:
         test:
           storage: /mnt_jianchong2/datasets/Refer/refcoco/Refcoco_test.json
       images:
-          storage: /mnt_jianchong2/datasets/coco/images/
+          storage: /mnt_jianchong2/datasets/Refer/images/
 
 run:
   runner: runner_regionblip

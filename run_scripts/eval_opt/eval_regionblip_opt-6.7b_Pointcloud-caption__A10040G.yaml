@@ -49,7 +49,7 @@ datasets:
         test:
           storage: /mnt_jianchong2/datasets/Cap3D/Cap3D_automated_Objaverse_test.txt
       pointcloud:
-        storage: "/mnt/shared/Group-aiearth/jianchong/datasets/ULIP-Objaverse_triplets/objaverse_pc_parallel/"
+        storage: "/mnt_jianchong2/datasets/ULIP-Objaverse_triplets/objaverse_pc_parallel/"
         num_points: 8192
         pc_augmentation: False
 

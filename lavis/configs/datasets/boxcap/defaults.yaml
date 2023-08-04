@@ -1,0 +1,13 @@
+# write by jianchong
+# For each box, additionally prepare an attention mask for box_query
+
+
+datasets:
+  general_box_caption:
+  #  task_name: task_alignLLM_boxtext
+  #  build_info:
+  #    annotations:
+  #      train:
+  #        storage: "/mnt_jianchong/datasets/lavis/Refer/refcoco/Refcoco_train.json"
+  #    images:
+  #        storage: /mnt_jianchong/datasets/lavis/Refer/images

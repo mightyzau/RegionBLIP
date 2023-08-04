@@ -66,18 +66,21 @@ class Config:
             model_type = model.get("model_type", None)
         # else use the model type selected by user.
 
-        assert model_type is not None, "Missing model_type."
-
-        model_config_path = model_cls.default_config_path(model_type=model_type)
-
         model_config = OmegaConf.create()
-        # hiararchy override, customized config > default config
-        model_config = OmegaConf.merge(
-            model_config,
-            OmegaConf.load(model_config_path),
-            {"model": config["model"]},
-        )
 
+        #assert model_type is not None, "Missing model_type."
+        if model_type is not None:
+            model_config_path = model_cls.default_config_path(model_type=model_type)
+            # hiararchy override, customized config > default config
+            model_config = OmegaConf.merge(
+                model_config,
+                OmegaConf.load(model_config_path),
+                {"model": config["model"]})
+        else:
+            model_config = OmegaConf.merge(
+                model_config,
+                {"model": config["model"]})
+            
         return model_config
 
     @staticmethod

@@ -32,6 +32,8 @@ We provide the pre-trained RegionBLIP models below.
 | --- | --- | --- | --- |
 | [RegionBLIP-OPT-2.7B](https://drive.google.com/file/d/1YS6XuRh3plH6i8VP5qgU0g2grOxsyvkY/view?usp=drive_link) | 63.5 | 112.7 | 57.0 |
 | [RegionBLIP-OPT-6.7B](https://drive.google.com/file/d/1_Q3AVVFocBOPHUXiLJAwHvP0mG8XU98H/view?usp=drive_link) | 64.2 | 113.6 | 59.3 |
+| [RegionBLIP-T5-XL](https://drive.google.com/file/d/1raJmYJbZh2KRoPY6hgJy8meyFrzQ0WkP/view?usp=drive_link) | 47.6 | 108.1 | 59.2 |
+| RegionBLILP-T5-XXL | 56.1 | 109.0 | 53.6 |
 
 
 
@@ -50,14 +52,14 @@ pip install loralib termcolor plyfile trimesh -i https://pypi.tuna.tsinghua.edu.
 
 Additional packages installed for the point encoder.
 ```
-pip install scikit-learn -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install scikit-learn ninja -i https://pypi.tuna.tsinghua.edu.cn/simple
 git clone https://github.com/unlimblue/KNN_CUDA
 cd KNN_CUDA
 python setup.py build install [--user]
+
+# NOTE:* 如果遇到 "from knn_cuda import KNN" 的错误，大概率是安装问题。可以直接指定安装路径 in the line-6 of lavis.model.pointbert.dvae.py。
+
 ```
-*NOTE:* 如果遇到 "from knn_cuda import KNN" 的错误，大概率是安装问题。可以直接指定安装路径 in the line-6 of lavis.model.pointbert.dvae.py。
-
-
 
 
 ## Datasets
@@ -153,13 +155,34 @@ python tools/prepare_regionblip_eval_referscannet.py -i ScanRefer_Dataset/raw/Sc
 # Generate Cap3D_automated_Objaverse_test__jianchong.json
 python tools/prepare_regionblip_eval_objaverse.py -i Cap3D/Cap3D_automated_Objaverse_test.txt
 ```
+The paths to these transformed ground-truth files should be registered in [*lavis/_\_init\__.py*](lavis/__init__.py).
 
-For example, to evaluate *RegionBLIP-OPT-2.7B*'s image-region captioning performance, run the following command.
+
+<br/>
+For example, to evaluate *RegionBLIP-OPT-2.7B*'s image-region captioning performance, run the following command with downloaded weight of *regionblip_opt-2.7b.pth*.
 ```
 python -m torch.distributed.run --nproc_per_node=8 evaluate.py \
     --cfg-path run_scripts/eval_opt/eval_regionblip_opt-2.7b_ImageRegion-caption_refcoco__A10040G.yaml \
     --options model.load_pretrained=True model.pretrained=regionblip_opt-2.7b.pth
 ```
+The result should look like this.
+```
+SPICE: 0.214
+Bleu_1: 0.337
+Bleu_2: 0.191
+Bleu_3: 0.106
+Bleu_4: 0.057
+METEOR: 0.245
+ROUGE_L: 0.391
+CIDEr: 0.635
+SPICE: 0.214
+```
+
+
+## RegionCap-10M Dataset
+
+We also release our collected [RegionCap-10M](https://drive.google.com/drive/folders/19iTkmWkRsXgxcbuJ9Ce7PqCyQjAnvY1P?usp=drive_link) dataset.
+
 
 ## Acknowledgement
 ---

@@ -68,8 +68,7 @@ datasets:
           storage: /mnt_jianchong2/datasets/Cap3D/Cap3D_automated_Objaverse_train.txt
           dataset_repeat_num: 1
       pointcloud:
-        #storage: "/mnt_jianchong2/datasets/ULIP-Objaverse_triplets/objaverse_pc_parallel/"
-        storage: "/mnt/shared/Group-aiearth/jianchong/datasets/ULIP-Objaverse_triplets/objaverse_pc_parallel/"
+        storage: "/mnt_jianchong2/datasets/ULIP-Objaverse_triplets/objaverse_pc_parallel/"
         num_points: 8192
         pc_augmentation: True
 
