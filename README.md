@@ -34,7 +34,14 @@ We provide the pre-trained RegionBLIP models below. Note that, if the point enco
 | [RegionBLIP-OPT-6.7B](https://drive.google.com/file/d/1_Q3AVVFocBOPHUXiLJAwHvP0mG8XU98H/view?usp=drive_link) | 64.2 | 113.6 | 59.3 | 50.12 | 
 | [RegionBLIP-T5-XL](https://drive.google.com/file/d/1raJmYJbZh2KRoPY6hgJy8meyFrzQ0WkP/view?usp=drive_link) | 47.6 | 108.1 | 59.2 |  | 
 | RegionBLILP-T5-XXL | 56.1 | 109.0 | 53.6 |  |
+The above models are pre-trained with RefCOCO train set.
 
+<br/>
+
+| Model | I-region captioning (RefCOCOg val) | PCD captioning (Objaverse test) | P-region captioning (ReferScannet val) |
+| --- | --- | --- | --- |
+| RegionBLIP-OPT-2.7B | 84.8 | 113.7 | 56.6 |
+The above models are pre-trained with RefCOCOg train set.
 
 
 ## Installation
