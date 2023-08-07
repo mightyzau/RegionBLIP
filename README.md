@@ -214,3 +214,8 @@ If you're using RegionBLIP in your research or applications, please cite using t
 ## License
 ---
 This repository is under BSD 3-Clause License. Many codes are based on [LAVIS](https://github.com/salesforce/LAVIS) with BSD 3-Clause License.
+
+
+## 其他
+---
+组里有多模态方向的实习生hc，机器充裕，氛围融洽，支持远程实习。有意向的同学，欢迎投递简历: mightyzau@gmail.com (简历投递截止时间 2023.9.31)。
