@@ -41,7 +41,7 @@ The above models are pre-trained with RefCOCO train set.
 
 | Model | I-region captioning (RefCOCOg val) | PCD captioning (Objaverse test) | P-region captioning (ReferScannet val) |
 | --- | --- | --- | --- |
-| RegionBLIP-OPT-2.7B | 84.8 | 113.7 | 56.6 |
+| [RegionBLIP-OPT-2.7B](https://drive.google.com/file/d/1ZQsszVfUiG_h9MQNYhw5CJQOb7rhkue6/view?usp=drive_link) | 84.8 | 113.7 | 56.6 |
 
 The above models are pre-trained with RefCOCOg train set.
 
