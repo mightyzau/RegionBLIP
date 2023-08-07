@@ -5,7 +5,7 @@ Qiang Zhou, Chaohui Yu, Shaofeng Zhang, Sitong Wu, Zhibing Wang, Fan Wang
 
 **Alibaba Damo Academy**
 
-<a href='https://regionblip.github.io'><img src='https://img.shields.io/badge/Project-Page-Green'>  <a href='https://arxiv.org/abs/xxx'><img src='https://img.shields.io/badge/Paper-Arxiv-red'></a>
+<a href='https://regionblip.github.io'><img src='https://img.shields.io/badge/Project-Page-Green'>  <a href='https://arxiv.org/abs/2308.02299'><img src='https://img.shields.io/badge/Paper-Arxiv-red'></a>
 
 
 ## Introduction
@@ -191,11 +191,13 @@ We also release our collected [RegionCap-10M](https://drive.google.com/drive/fol
 ---
 If you're using RegionBLIP in your research or applications, please cite using this BibTeX:
 ```
-@article{zhou2023regionblip,
-  title={RegionBLIP: A Unified Multi-modal Pre-training Framework for Holistic and Regional Comprehension},
-  author={Qiang Zhou, Chaohui Yu, Shaofeng Zhang, Sitong Wu, Zhibing Wang, Fan Wang},
-  journal={arXiv preprint arXiv:TO-REPLACE},
-  year={2023}
+@misc{zhou2023regionblip,
+      title={RegionBLIP: A Unified Multi-modal Pre-training Framework for Holistic and Regional Comprehension}, 
+      author={Qiang Zhou and Chaohui Yu and Shaofeng Zhang and Sitong Wu and Zhibing Wang and Fan Wang},
+      year={2023},
+      eprint={2308.02299},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
 }
 ```
 
